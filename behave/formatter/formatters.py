@@ -22,6 +22,8 @@ def get_formatter(config, streams):
     # doesn't (py2k sys.stdout) then make it do so.
     default_encoding = 'UTF-8'
     for i, stream in enumerate(streams):
+        if hasattr(stream, 'stream'):
+            continue    # Already wrapped with a codecs.StreamWriter
         if sys.version_info[0] < 3:
             # py2 does, however, sometimes declare an encoding on sys.stdout,
             # even if it doesn't use it (or it might be explicitly None)

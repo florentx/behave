@@ -75,7 +75,7 @@ def read_file_contents(filename, context=None, encoding=None):
 #         shutil.rmtree(context.workdir, ignore_errors=True)
 #     ensure_workdir_exists(context)
 
-def create_textfile_with_contents(filename, contents):
+def create_textfile_with_contents(filename, contents, encoding='utf-8'):
     """
     Creates a textual file with the provided contents in the workdir.
     Overwrites an existing file.
@@ -83,11 +83,8 @@ def create_textfile_with_contents(filename, contents):
     ensure_directory_exists(os.path.dirname(filename))
     if os.path.exists(filename):
         os.remove(filename)
-    # XXX-JE-TODO: encoding
-    # => codecs.open(filename, "w", encoding)
-    # => io.open(filename, "w", encoding)
     outstream = open(filename, "w")
-    outstream.write(contents)
+    outstream.write(contents.encode(encoding))
     if contents and not contents.endswith("\n"):
         outstream.write("\n")
     outstream.flush()
